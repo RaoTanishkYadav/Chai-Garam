@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Order - Chai Garam Café</title>
-  
   <style>
     * {margin:0;padding:0;box-sizing:border-box;font-family:"Poppins",sans-serif;}
     body {background:#1e1e1e;color:#fff;line-height:1.6;}
@@ -40,15 +39,11 @@
     .instagram a:hover {color:#fff;}
     footer {background:#111;text-align:center;padding:15px;margin-top:40px;color:#aaa;}
     footer span {color:#f7c08a;}
-    
-
-    /* Bill Section */
     .bill {display:none;background:#fff;color:#000;padding:20px;border-radius:12px;margin-top:20px;}
     .bill h3 {text-align:center;color:#222;margin-bottom:10px;}
     .bill p {margin:5px 0;}
     .bill .qr {text-align:center;margin-top:15px;}
     .bill .qr img {width:150px;height:150px;}
-      /* Menu Slider */
     .menu-slider { 
       position: relative;
       width: 1100px;
@@ -56,6 +51,10 @@
       border-radius: 15px;
       overflow: hidden;
       box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 40px auto;
     }
     .menu-slider img {
       position: absolute;
@@ -65,168 +64,153 @@
       height: 100%;
       object-fit: cover;
       opacity: 0;
-      transform: translateX(100px);
-      animation: slideIn 9s infinite;
+      transition: opacity 0.7s;
+      z-index: 1;
     }
-    .menu-slider img.img1 { animation-delay: 0s; }
-    .menu-slider img.img2 { animation-delay: 3s; }
-    .menu-slider img.img3 { animation-delay: 6s; }
-
-    @keyframes slideIn {
-      0% { opacity: 0; transform: translateX(100px); }
-      10% { opacity: 1; transform: translateX(0); }
-      30% { opacity: 1; transform: translateX(0); }
-      40% { opacity: 0; transform: translateX(-100px); }
-      100% { opacity: 0; transform: translateX(-100px); }
+    .menu-slider img.active {
+      opacity: 1;
+      z-index: 2;
     }
-
-    /* WhatsApp Fixed Button */
     .whatsapp-fixed {
-  position: fixed;
-  right: 28px;
-  bottom: 32px;
-  z-index: 9999;
-  background: #25d366;
-  border-radius: 50%;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  transition: transform 0.2s;
-}
-.whatsapp-fixed img {
-  width: 38px;
-  height: 38px;
-  display: block;
-}
-.whatsapp-fixed:hover {
-  transform: scale(1.12);
-  box-shadow: 0 8px 32px rgba(37,211,102,0.25);
-}
-
-    /* Responsive Design */
-@media (max-width: 900px) {
-  .container {
-    flex-direction: column;
-    max-width: 98vw;
-    gap: 0;
-  }
-  .order-container, .right-side {
-    width: 100%;
-    min-width: 0;
-    margin: 0;
-    box-shadow: none;
-    border-radius: 0;
-    padding: 12px;
-  }
-  .slider {
-    height: 180px;
-  }
-  .slides img {
-    height: 180px;
-  }
-  .menu-slider {
-    width: 98vw;
-    height: 220px;
-    max-width: 100vw;
-  }
-}
-
-@media (max-width: 600px) {
-  body {
-    font-size: 0.98rem;
-  }
-  nav {
-    flex-direction: column;
-    padding: 8px 10px;
-  }
-  .logo-area h1 {
-    font-size: 1.1rem;
-  }
-  .container {
-    padding: 0;
-  }
-  .order-container, .right-side {
-    padding: 8px;
-  }
-  .form-group input, .form-group select, .form-group textarea {
-    font-size: 0.98rem;
-    padding: 10px;
-  }
-  .btn, #whatsappPayBtn {
-    font-size: 1rem;
-    padding: 10px;
-  }
-  .bill {
-    padding: 10px;
-    font-size: 0.98rem;
-  }
-  .bill .qr img {
-    width: 110px;
-    height: 110px;
-  }
-  .menu-slider {
-    height: 140px;
-  }
-  .whatsapp-fixed {
-    right: 12px;
-    bottom: 14px;
-    padding: 7px;
-  }
-  .whatsapp-fixed img {
-    width: 28px;
-    height: 28px;
-  }
-}
-
-/* Extra mobile-friendly tweaks */
-@media (max-width: 480px) {
-  .container {
-    padding: 0 2vw;
-    gap: 0;
-  }
-  .order-container, .right-side {
-    padding: 6px;
-    border-radius: 0;
-    box-shadow: none;
-  }
-  .form-group input, .form-group select, .form-group textarea {
-    font-size: 1rem;
-    padding: 8px;
-  }
-  .btn, #whatsappPayBtn, #paytmPayBtn {
-    font-size: 1rem;
-    padding: 10px;
-    width: 100%;
-  }
-  .bill {
-    padding: 8px;
-    font-size: 0.95rem;
-  }
-  .bill .qr img {
-    width: 90px;
-    height: 90px;
-  }
-  nav {
-    flex-direction: column;
-    padding: 8px 4px;
-  }
-  .logo-area h1 {
-    font-size: 1rem;
-  }
-  .slider, .slides img {
-    height: 110px;
-  }
-  .menu-slider {
-    height: 90px;
-    width: 98vw;
-    max-width: 100vw;
-  }
-}
+      position: fixed;
+      right: 28px;
+      bottom: 32px;
+      z-index: 9999;
+      background: #25d366;
+      border-radius: 50%;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      transition: transform 0.2s;
+    }
+    .whatsapp-fixed img {
+      width: 38px;
+      height: 38px;
+      display: block;
+    }
+    .whatsapp-fixed:hover {
+      transform: scale(1.12);
+      box-shadow: 0 8px 32px rgba(37,211,102,0.25);
+    }
+    @media (max-width: 900px) {
+      .container {
+        flex-direction: column;
+        max-width: 98vw;
+        gap: 0;
+      }
+      .order-container, .right-side {
+        width: 100%;
+        min-width: 0;
+        margin: 0;
+        box-shadow: none;
+        border-radius: 0;
+        padding: 12px;
+      }
+      .slider {
+        height: 180px;
+      }
+      .slides img {
+        height: 180px;
+      }
+      .menu-slider {
+        width: 98vw;
+        height: 220px;
+        max-width: 100vw;
+      }
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.98rem;
+      }
+      nav {
+        flex-direction: column;
+        padding: 8px 10px;
+      }
+      .logo-area h1 {
+        font-size: 1.1rem;
+      }
+      .container {
+        padding: 0;
+      }
+      .order-container, .right-side {
+        padding: 8px;
+      }
+      .form-group input, .form-group select, .form-group textarea {
+        font-size: 0.98rem;
+        padding: 10px;
+      }
+      .btn, #whatsappPayBtn {
+        font-size: 1rem;
+        padding: 10px;
+      }
+      .bill {
+        padding: 10px;
+        font-size: 0.98rem;
+      }
+      .bill .qr img {
+        width: 110px;
+        height: 110px;
+      }
+      .menu-slider {
+        height: 140px;
+      }
+      .whatsapp-fixed {
+        right: 12px;
+        bottom: 14px;
+        padding: 7px;
+      }
+      .whatsapp-fixed img {
+        width: 28px;
+        height: 28px;
+      }
+    }
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 2vw;
+        gap: 0;
+      }
+      .order-container, .right-side {
+        padding: 6px;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .form-group input, .form-group select, .form-group textarea {
+        font-size: 1rem;
+        padding: 8px;
+      }
+      .btn, #whatsappPayBtn, #paytmPayBtn {
+        font-size: 1rem;
+        padding: 10px;
+        width: 100%;
+      }
+      .bill {
+        padding: 8px;
+        font-size: 0.95rem;
+      }
+      .bill .qr img {
+        width: 90px;
+        height: 90px;
+      }
+      nav {
+        flex-direction: column;
+        padding: 8px 4px;
+      }
+      .logo-area h1 {
+        font-size: 1rem;
+      }
+      .slider, .slides img {
+        height: 110px;
+      }
+      .menu-slider {
+        height: 90px;
+        width: 98vw;
+        max-width: 100vw;
+      }
+    }
   </style>
 </head>
 <body>
-
   <!-- Nav -->
   <nav>
     <div class="logo-area">
@@ -238,7 +222,6 @@
       <li><a href="order.html">Order</a></li>
     </ul>
   </nav>
-
   <!-- Main -->
   <div class="container">
     <!-- Left: Order Form -->
@@ -258,10 +241,10 @@
           <input type="email" id="email" required>
         </div>
         <!-- Multiple Item Selection -->
-                <div class="form-group">
+        <div class="form-group">
           <label for="item">Select Item</label>
           <select id="item" multiple required>
-  <!-- HOT BEVERAGES — MILK TEA (Small / Large) -->
+            <!-- HOT BEVERAGES — MILK TEA (Small / Large) -->
    <option value="0">Select Item</option>
   <option value="10">Kadak Chai / Adrak Chai — Small — ₹10</option>
   <option value="15">Kadak Chai / Adrak Chai — Large — ₹15</option>
@@ -476,25 +459,20 @@
           </select>
           <small style="color:#f7c08a;">Use CTRL (Windows) / CMD (Mac) to select 2 items.</small>
         </div>
-
         <div class="form-group">
           <label for="quantity">Quantity (applies to all items)</label>
           <input type="number" id="quantity" min="1" value="1" required>
         </div>
-
-        <!-- New field: Customer telling time -->
         <div class="form-group">
           <label for="comingTime">I’m Coming At (Time)</label>
           <input type="time" id="comingTime" required>
         </div>
-
         <div class="form-group">
           <label for="message">Special Instructions</label>
           <textarea id="message"></textarea>
         </div>
         <button type="submit" class="btn">Generate Bill</button>
       </form>
-
       <!-- Bill Section -->
       <div class="bill" id="bill">
         <h3>Chai Garam Café - Bill</h3>
@@ -519,7 +497,7 @@
         </div>
       </div>
     </div>
-      <!-- Right: Images + Insta -->
+    <!-- Right: Images + Insta -->
     <div class="right-side">
       <div class="slider">
         <div class="slides">
@@ -528,39 +506,47 @@
           <img src="03.jpg" alt="Tea 3">
         </div>
       </div>
-       <div class="instagram">
+      <div class="instagram">
         <h3>Follow Us</h3>
         <a href="https://instagram.com/thechaigaramlloyd" target="_blank">📸 Instagram</a>
       </div>
     </div>
   </div>
-     <div class="menu-slider" style=" justify-self: center; align-items: center;display: flex;">
-      <img src="m1.png" alt="Chai Cup 1" class="slide-img img1">
-      <img src="m2.png" alt="Chai Cup 2" class="slide-img img2">
-      <img src="m3.png" alt="Chai Cup 3" class="slide-img img3">
-    </div>
-   </style>
-</head>
-<body>
+  <div class="menu-slider">
+    <img src="m1.png" alt="Chai Cup 1" class="slide-img active">
+    <img src="m2.png" alt="Chai Cup 2" class="slide-img">
+    <img src="m3.png" alt="Chai Cup 3" class="slide-img">
+  </div>
   <!-- Footer -->
   <footer>
     <p>© 2025 Chai Garam Café | Developed by <span>Branverge</span></p>
   </footer>
-
   <!-- WhatsApp Fixed Button -->
-<a href="https://wa.me/917599792990" class="whatsapp-fixed" target="_blank" title="Chat on WhatsApp">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
-</a>
-
+  <a href="https://wa.me/917599792990" class="whatsapp-fixed" target="_blank" title="Chat on WhatsApp">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+  </a>
   <script>
-    // Auto-slide every 4 seconds
-    setInterval(() => showSlide(index + 1), 4000);
     // Track daily order count
     let today = new Date().toLocaleDateString();
     if(localStorage.getItem("orderDate") !== today){
       localStorage.setItem("orderDate", today);
       localStorage.setItem("orderCount", 0);
     }
+
+    // Menu slider effect
+    const sliderImgs = document.querySelectorAll('.menu-slider .slide-img');
+    let sliderCurrent = 0;
+    function showSlider(idx) {
+      sliderImgs.forEach((img, i) => {
+        img.classList.toggle('active', i === idx);
+      });
+    }
+    function nextSlider() {
+      sliderCurrent = (sliderCurrent + 1) % sliderImgs.length;
+      showSlider(sliderCurrent);
+    }
+    setInterval(nextSlider, 3000);
+    showSlider(sliderCurrent);
 
     document.getElementById("orderForm").addEventListener("submit", function(e){
       e.preventDefault();
@@ -610,8 +596,8 @@
 
       // Order Number
       let count = parseInt(localStorage.getItem("orderCount")) + 1;
-localStorage.setItem("orderCount", count);
-let orderNo = String(count).padStart(3,"0");
+      localStorage.setItem("orderCount", count);
+      let orderNo = String(count).padStart(3,"0");
 
       let total = selectedItems.reduce((sum, it) => sum + (it.price * qty), 0);
 
@@ -626,7 +612,7 @@ let orderNo = String(count).padStart(3,"0");
       document.getElementById("bTotal").innerText = total;
 
       let upiID = "8868849287@ptsbi";
-      let qrImageUrl = "payment-qr.jpg"; // If hosted online, use the public URL
+      let message = document.getElementById("message").value.trim();
 
       let whatsappMsg =
         `*Chai Garam Café - Bill*%0A` +
@@ -639,6 +625,7 @@ let orderNo = String(count).padStart(3,"0");
         `*Quantity:* ${qty}%0A` +
         `*Coming At:* ${comingTime}%0A` +
         `*Total:* ₹${total}%0A` +
+        `*Special Instructions:* ${message ? message : "None"}%0A` +
         `*Pay to UPI ID:* ${upiID}%0A` +
         `Scan the QR in your bill to pay.`;
 
@@ -655,6 +642,5 @@ let orderNo = String(count).padStart(3,"0");
       // Optionally, you can reset the form or show a confirmation message here
     };
   </script>
-
 </body>
 </html>
