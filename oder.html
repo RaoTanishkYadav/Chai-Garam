@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order - Chai Garam Café</title>
+  
+  <style>
+    * {margin:0;padding:0;box-sizing:border-box;font-family:"Poppins",sans-serif;}
+    body {background:#1e1e1e;color:#fff;line-height:1.6;}
+    nav {background:rgba(0,0,0,0.85);padding:12px 30px;display:flex;justify-content:space-between;align-items:center;}
+    .logo-area {display:flex;align-items:center;gap:10px;}
+    .logo-area img {height:50px;width:50px;border-radius:50%;background:#444;}
+    .logo-area h1 {color:#f7c08a;font-size:1.5rem;}
+    nav ul {display:flex;list-style:none;}
+    nav ul li {margin-left:20px;}
+    nav ul li a {text-decoration:none;color:#fff;transition:0.3s;}
+    nav ul li a:hover {color:#f7c08a;}
+    .container {display:flex;flex-wrap:wrap;margin:30px auto;max-width:1200px;gap:20px;}
+    .order-container {flex:1 1 500px;background:#2a2a2a;padding:25px;border-radius:15px;box-shadow:0 6px 20px rgba(0,0,0,0.5);}
+    .order-container h2 {text-align:center;color:#f7c08a;margin-bottom:20px;}
+    .form-group {margin-bottom:18px;}
+    .form-group label {display:block;margin-bottom:6px;font-weight:500;}
+    .form-group input,.form-group select,.form-group textarea {
+      width:100%;padding:12px;border-radius:8px;border:none;outline:none;font-size:1rem;
+      background:#fff;color:#333;
+    }
+    .form-group textarea {resize:none;height:80px;}
+    .btn {display:block;width:100%;padding:14px;font-size:1.1rem;font-weight:bold;border:none;
+      border-radius:8px;background:#f7c08a;color:#1e1e1e;cursor:pointer;transition:0.3s;}
+    .btn:hover {transform:scale(1.05);}
+    .right-side {flex:1 150px;display:flex;flex-direction:column;gap:20px;}
+    .slider {position:relative;overflow:hidden;border-radius:15px;height:250px;}
+    .slides {display:flex;width:300%;animation:slide 25s infinite;}
+    .slides img {width:100%;height:250px;object-fit:cover;}
+    @keyframes slide {0%{transform:translateX(0);}33%{transform:translateX(-100%);}66%{transform:translateX(-200%);}100%{transform:translateX(0);}}
+    .instagram {background:#2a2a2a;border-radius:15px;padding:20px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,0.4);}
+    .instagram h3 {color:#f7c08a;margin-bottom:10px;}
+    .instagram a {color:#f7c08a;font-weight:bold;text-decoration:none;font-size:1.1rem;}
+    .instagram a:hover {color:#fff;}
+    footer {background:#111;text-align:center;padding:15px;margin-top:40px;color:#aaa;}
+    footer span {color:#f7c08a;}
+    
+
+    /* Bill Section */
+    .bill {display:none;background:#fff;color:#000;padding:20px;border-radius:12px;margin-top:20px;}
+    .bill h3 {text-align:center;color:#222;margin-bottom:10px;}
+    .bill p {margin:5px 0;}
+    .bill .qr {text-align:center;margin-top:15px;}
+    .bill .qr img {width:150px;height:150px;}
+      /* Menu Slider */
+    .menu-slider { 
+      position: relative;
+      width: 1100px;
+      height: 700px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+    .menu-slider img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: translateX(100px);
+      animation: slideIn 9s infinite;
+    }
+    .menu-slider img.img1 { animation-delay: 0s; }
+    .menu-slider img.img2 { animation-delay: 3s; }
+    .menu-slider img.img3 { animation-delay: 6s; }
+
+    @keyframes slideIn {
+      0% { opacity: 0; transform: translateX(100px); }
+      10% { opacity: 1; transform: translateX(0); }
+      30% { opacity: 1; transform: translateX(0); }
+      40% { opacity: 0; transform: translateX(-100px); }
+      100% { opacity: 0; transform: translateX(-100px); }
+    }
+
+    /* WhatsApp Fixed Button */
+    .whatsapp-fixed {
+  position: fixed;
+  right: 28px;
+  bottom: 32px;
+  z-index: 9999;
+  background: #25d366;
+  border-radius: 50%;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s;
+}
+.whatsapp-fixed img {
+  width: 38px;
+  height: 38px;
+  display: block;
+}
+.whatsapp-fixed:hover {
+  transform: scale(1.12);
+  box-shadow: 0 8px 32px rgba(37,211,102,0.25);
+}
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="logo-area">
+      <img src="logo.png" alt="Chai Garam Logo">
+      <h1>Chai Garam Café</h1>
+    </div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="order.html">Order</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main -->
+  <div class="container">
+    <!-- Left: Order Form -->
+    <div class="order-container">
+      <h2>Place Your Order</h2>
+      <form id="orderForm">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" pattern="[A-Za-z\s]+" title="Only letters and spaces allowed" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" pattern="\d{10}" maxlength="10" title="Enter 10 digit phone number" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" required>
+        </div>
+        <!-- Multiple Item Selection -->
+                <div class="form-group">
+          <label for="item">Select Item</label>
+          <select id="item" required>
+  <!-- HOT BEVERAGES — MILK TEA (Small / Large) -->
+   <option value="0">Select Item</option>
+  <option value="10">Kadak Chai / Adrak Chai — Small — ₹10</option>
+  <option value="15">Kadak Chai / Adrak Chai — Large — ₹15</option>
+  <option value="20">Tulsi Chai — Small — ₹20</option>
+  <option value="30">Tulsi Chai — Large — ₹30</option>
+  <option value="20">Adrak Chai — Small — ₹20</option>
+  <option value="30">Adrak Chai — Large — ₹30</option>
+  <option value="20">Elaichi Chai — Small — ₹20</option>
+  <option value="30">Elaichi Chai — Large — ₹30</option>
+  <option value="25">Tulsi–Adrak Chai — Small — ₹25</option>
+  <option value="35">Tulsi–Adrak Chai — Large — ₹35</option>
+  <option value="25">Adrak–Elaichi Chai — Small — ₹25</option>
+  <option value="35">Adrak–Elaichi Chai — Large — ₹35</option>
+  <option value="25">Saunf–Elaichi Chai — Small — ₹25</option>
+  <option value="35">Saunf–Elaichi Chai — Large — ₹35</option>
+  <option value="30">Chai Garam SPECIAL (Premium Masala Chai) — Small — ₹30</option>
+  <option value="60">Chai Garam SPECIAL (Premium Masala Chai) — Large — ₹60</option>
+  <option value="5">Add-on: Kulhad — ₹5</option>
+
+  <!-- HOT BEVERAGES — GREEN TEA -->
+  <option value="50">Green Tea — ₹50</option>
+  <option value="60">Green Tea with Lemon & Honey — ₹60</option>
+  <option value="70">Jasmine Green Tea — ₹70</option>
+
+  <!-- HOT BEVERAGES — HOT COFFEE -->
+  <option value="40">Hand Made Coffee — ₹40</option>
+  <option value="30">Mocha Coffee — Small — ₹30</option>
+  <option value="60">Mocha Coffee — Large — ₹60</option>
+  <option value="20">Black Coffee — Small — ₹20</option>
+  <option value="40">Black Coffee — Large — ₹40</option>
+
+  <!-- HOT BEVERAGES — OTHER -->
+  <option value="70">Hot Chocolate (Hershey’s) — ₹70</option>
+
+  <!-- COLD BEVERAGES — COOL REFRESHERS -->
+  <option value="30">Nimbu Pani — ₹30</option>
+  <option value="40">Classic Lemonade — ₹40</option>
+  <option value="50">Jeera Masala Soda — ₹50</option>
+  <option value="50">Jain Shikanji — ₹50</option>
+  <option value="60">Virgin Mojito — ₹60</option>
+  <option value="60">Strawberry Mojito — ₹60</option>
+  <option value="60">Peach Mojito — ₹60</option>
+  <option value="60">Watermelon Mojito — ₹60</option>
+  <option value="60">Green Apple Mojito — ₹60</option>
+  <option value="60">Cool Blue Mojito — ₹60</option>
+  <option value="60">Blue Curacao Mojito — ₹60</option>
+  <option value="60">Bubblegum Mojito — ₹60</option>
+  <option value="60">Blueberry Mojito — ₹60</option>
+  <option value="60">Imli Mojito — ₹60</option>
+  <option value="80">Aam Panna — ₹80</option>
+  <option value="80">Chilly Guava Squash — ₹80</option>
+
+  <!-- COLD BEVERAGES — ICE TEAS -->
+  <option value="60">Lemon Ice Tea — ₹60</option>
+  <option value="60">Strawberry Ice Tea — ₹60</option>
+  <option value="60">Peach Ice Tea — ₹60</option>
+  <option value="60">Watermelon Ice Tea — ₹60</option>
+
+  <!-- COLD BEVERAGES — LASSI -->
+  <option value="40">Masala Chhach — ₹40</option>
+  <option value="50">Sweet Lassi — ₹50</option>
+  <option value="60">Mango Lassi — ₹60</option>
+  <option value="60">Strawberry Lassi — ₹60</option>
+
+  <!-- SHAKES & MORE -->
+  <option value="40">Cold Coffee — ₹40</option>
+  <option value="60">Hazelnut Cold Coffee — ₹60</option>
+  <option value="60">Hazelnut Shake — ₹60</option>
+  <option value="60">Oreo Shake — ₹60</option>
+  <option value="60">Black Currant Shake — ₹60</option>
+  <option value="60">Chocolate Milk Shake (Hershey’s) — ₹60</option>
+  <option value="60">Vanilla Milk Shake — ₹60</option>
+  <option value="60">Strawberry Milk Shake — ₹60</option>
+  <option value="60">Butterscotch Milk Shake — ₹60</option>
+  <option value="80">KitKat Chocolate Shake — ₹80</option>
+  <option value="80">Brownie Cold Coffee — ₹80</option>
+  <option value="20">Add-on: Ice Cream (one scoop) — ₹20</option>
+
+  <!-- THICK FRAPPE -->
+  <option value="70">Cold Mocha Coffee — ₹70</option>
+  <option value="70">Cold Frappe Coffee — ₹70</option>
+  <option value="80">Oreo Shake (Thick) — ₹80</option>
+  <option value="100">KitKat Chocolate Shake (Thick) — ₹100</option>
+  <option value="80">Chocolate Milk Shake (Hershey’s, Thick) — ₹80</option>
+  <option value="80">Strawberry Milk Shake (Thick) — ₹80</option>
+  <option value="80">Butterscotch Milk Shake (Thick) — ₹80</option>
+  <option value="100">Brownie Cold Coffee (Thick) — ₹100</option>
+  <option value="100">Crunchy Cookies Caramel Delight — ₹100</option>
+  <option value="100">Crunchy Biscoff Shake — ₹100</option>
+
+  <!-- ALL DAY BREAKFAST -->
+  <option value="30">Butter Toast — ₹30</option>
+  <option value="35">Bun Maska — ₹35</option>
+  <option value="45">Bun Cheese Garlic Maska — ₹45</option>
+  <option value="60">Chilli Cheese Garlic Toast — ₹60</option>
+  <option value="30">Wada Pao — ₹30</option>
+  <option value="50">Butter Wada Pao — ₹50</option>
+  <option value="60">Cheese Wada Pao — ₹60</option>
+  <option value="50">Bhel Puri — ₹50</option>
+  <option value="70">Chinese Bhel Puri — ₹70</option>
+
+  <!-- PIZZA (Small / Large) -->
+  <option value="80">Corn Pizza — Small — ₹80</option>
+  <option value="130">Corn Pizza — Large — ₹130</option>
+  <option value="80">Single Topping Pizza — Small — ₹80</option>
+  <option value="130">Single Topping Pizza — Large — ₹130</option>
+  <option value="90">Veg Supreme — Small — ₹90</option>
+  <option value="150">Veg Supreme — Large — ₹150</option>
+  <option value="100">Spiced Paneer — Small — ₹100</option>
+  <option value="160">Spiced Paneer — Large — ₹160</option>
+  <option value="110">Farm Fresh Pizza — Small — ₹110</option>
+  <option value="180">Farm Fresh Pizza — Large — ₹180</option>
+
+  <!-- BURGERS -->
+  <option value="50">Aloo Tikki Burger — ₹50</option>
+  <option value="60">Veg Crispy Burger — ₹60</option>
+  <option value="70">Veg Cheese Burger — ₹70</option>
+  <option value="80">Paneer Burger — ₹80</option>
+
+  <!-- WRAPS -->
+  <option value="70">Veg Wrap — ₹70</option>
+  <option value="80">Veg Aloo Tikki Wrap — ₹80</option>
+  <option value="90">Paneer Tandoori Wrap — ₹90</option>
+  <option value="90">Crispy Veg Wrap — ₹90</option>
+  <option value="90">Hara Bhara Kebab Wrap — ₹90</option>
+  <option value="90">Falafal Wrap — ₹90</option>
+  <option value="100">Crunchy Paneer Wrap — ₹100</option>
+  <option value="100">Peri Peri Paneer Wrap — ₹100</option>
+  <option value="100">Makhni Paneer Wrap — ₹100</option>
+
+  <!-- JUMBO GRILLED SANDWICHES -->
+  <option value="40">Veg Regular Sandwich — ₹40</option>
+  <option value="70">Veg Cheese Sandwich — ₹70</option>
+  <option value="70">American Corn Sandwich — ₹70</option>
+  <option value="70">Cheese Garlic Sandwich — ₹70</option>
+  <option value="70">Paneer Sandwich — ₹70</option>
+  <option value="70">Tandoori Veg Sandwich — ₹70</option>
+  <option value="70">Makhni Sandwich — ₹70</option>
+  <option value="80">Tandoori Paneer Sandwich — ₹80</option>
+  <option value="80">Spinach Corn Sandwich — ₹80</option>
+
+  <!-- PARATHA -->
+  <option value="50">Aloo Paratha — ₹50</option>
+  <option value="70">Paneer Paratha — ₹70</option>
+  <option value="80">Cheese Paratha — ₹80</option>
+
+  <!-- FRIES & ADD-ONS -->
+  <option value="40">Classic Fries — ₹40</option>
+  <option value="50">Peri-Peri Fries — ₹50</option>
+  <option value="70">Cheesy Fries — ₹70</option>
+  <option value="80">Tandoori Cheese Loaded Fries — ₹80</option>
+  <option value="80">Peri Peri Cheesy Fries — ₹80</option>
+  <option value="90">Chilly Cheese Loaded Fries — ₹90</option>
+  <option value="90">Cheese BBQ Loaded Fries — ₹90</option>
+  <option value="100">Baked Cheese Fries — ₹100</option>
+  <option value="10">Add-on: Dip — ₹10</option>
+
+  <!-- CORN -->
+  <option value="50">Bowl Sweet Corn — ₹50</option>
+  <option value="60">Masala Sweet Corn — ₹60</option>
+  <option value="70">Tawa Corn Chaat — ₹70</option>
+  <option value="90">Crispy Corn Chaat — ₹90</option>
+
+  <!-- MAGGI -->
+  <option value="35">Plain Maggi — ₹35</option>
+  <option value="40">Veg Maggi — ₹40</option>
+  <option value="45">Masala Maggi — ₹45</option>
+  <option value="65">Tandoori Maggi — ₹65</option>
+  <option value="75">Cheese Maggi — ₹75</option>
+  <option value="80">Chilly Cheese Maggi — ₹80</option>
+  <option value="55">Chilly Garlic Maggie — ₹55</option>
+  <option value="55">Veg Masala Maggie — ₹55</option>
+
+  <!-- OATS -->
+  <option value="40">Masala Oats — ₹40</option>
+  <option value="50">Vegetable Oats — ₹50</option>
+  <option value="60">Cheesy Vegetable Oats — ₹60</option>
+  <option value="70">Tandoori Vegetable Oats — ₹70</option>
+
+  <!-- NOODLES -->
+  <option value="60">Veg Noodles — ₹60</option>
+  <option value="70">Schezwan Noodles — ₹70</option>
+  <option value="80">Paneer Noodles — ₹80</option>
+  <option value="70">Hakka Bakka Noodles — ₹70</option>
+
+  <!-- RICE -->
+  <option value="60">Veg Fried Rice — ₹60</option>
+  <option value="70">Schezwan Fried Rice — ₹70</option>
+  <option value="70">Paneer Fried Rice — ₹70</option>
+  <option value="70">Lemon Fried Rice — ₹70</option>
+
+  <!-- CHINESE MAIN COURSE -->
+  <option value="110">Paneer Chilly Gravy — ₹110</option>
+  <option value="90">Paneer Chilly Dry — ₹90</option>
+  <option value="70">Manchurian Dry — ₹70</option>
+  <option value="90">Manchurian Gravy — ₹90</option>
+  <option value="60">Chilly Potato — ₹60</option>
+  <option value="70">Honey Chilly Potato — ₹70</option>
+
+  <!-- ROLLS (Right panel) -->
+  <option value="100">Cheese Corn Roll — ₹100</option>
+  <option value="90">Paneer Tikka Roll — ₹90</option>
+  <option value="90">Veg Chaap Roll — ₹90</option>
+
+  <!-- ROLLS AND MORE -->
+  <option value="50">Veg Roll — ₹50</option>
+  <option value="70">Paneer Roll — ₹70</option>
+  <option value="50">Spring Roll — ₹50</option>
+  <option value="60">Chilly Soya — ₹60</option>
+  <option value="140">Veg Noodles + Veg Manchurian — ₹140</option>
+  <option value="140">Veg Rice + Veg Manchurian — ₹140</option>
+          </select>
+          <small style="color:#f7c08a;">Use CTRL (Windows) / CMD (Mac) to select 2 items.</small>
+        </div>
+
+        <div class="form-group">
+          <label for="quantity">Quantity (applies to all items)</label>
+          <input type="number" id="quantity" min="1" value="1" required>
+        </div>
+
+        <!-- New field: Customer telling time -->
+        <div class="form-group">
+          <label for="comingTime">I’m Coming At (Time)</label>
+          <input type="time" id="comingTime" required>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Special Instructions</label>
+          <textarea id="message"></textarea>
+        </div>
+        <button type="submit" class="btn">Generate Bill</button>
+      </form>
+
+      <!-- Bill Section -->
+      <div class="bill" id="bill">
+        <h3>Chai Garam Café - Bill</h3>
+        <p><b>Order No:</b> <span id="bOrderNo"></span></p>
+        <p><b>Date & Time:</b> <span id="bDateTime"></span></p>
+        <p><b>Name:</b> <span id="bName"></span></p>
+        <p><b>Phone:</b> <span id="bPhone"></span></p>
+        <p><b>Email:</b> <span id="bEmail"></span></p>
+        <p><b>Items:</b> <span id="bItem"></span></p>
+        <p><b>Quantity:</b> <span id="bQty"></span></p>
+        <p><b>Coming At:</b> <span id="bComing"></span></p>
+        <p><b>Total:</b> ₹<span id="bTotal"></span></p>
+        <div class="qr">
+          <h4>Scan to Pay</h4>
+          <img id="qrCode" src="" alt="QR Code">
+        </div>
+        <div style="text-align:center; margin-top:16px;">
+          <a id="whatsappPayBtn" class="btn" style="background:#25d366;color:#fff;" target="_blank">
+            Pay via WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+      <!-- Right: Images + Insta -->
+    <div class="right-side">
+      <div class="slider">
+        <div class="slides">
+          <img src="01.jpg" alt="Tea 1">
+          <img src="02.jpg" alt="Tea 2">
+          <img src="03.jpg" alt="Tea 3">
+        </div>
+      </div>
+       <div class="instagram">
+        <h3>Follow Us</h3>
+        <a href="https://instagram.com/thechaigaramlloyd" target="_blank">📸 Instagram</a>
+      </div>
+    </div>
+  </div>
+     <div class="menu-slider" style=" justify-self: center; align-items: center;display: flex;">
+      <img src="m1.png" alt="Chai Cup 1" class="slide-img img1">
+      <img src="m2.png" alt="Chai Cup 2" class="slide-img img2">
+      <img src="m3.png" alt="Chai Cup 3" class="slide-img img3">
+    </div>
+   </style>
+</head>
+<body>
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Chai Garam Café | Developed by <span>Branverge</span></p>
+  </footer>
+
+  <!-- WhatsApp Fixed Button -->
+<a href="https://wa.me/917599792990" class="whatsapp-fixed" target="_blank" title="Chat on WhatsApp">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+</a>
+
+  <script>
+    // Auto-slide every 4 seconds
+    setInterval(() => showSlide(index + 1), 4000);
+    // Track daily order count
+    let today = new Date().toLocaleDateString();
+    if(localStorage.getItem("orderDate") !== today){
+      localStorage.setItem("orderDate", today);
+      localStorage.setItem("orderCount", 0);
+    }
+
+    document.getElementById("orderForm").addEventListener("submit", function(e){
+      e.preventDefault();
+
+      // Name validation: only letters and spaces
+      let name = document.getElementById("name").value.trim();
+      if(!/^[A-Za-z\s]+$/.test(name)){
+        alert("Name should contain only letters and spaces.");
+        return;
+      }
+
+      // Phone validation: only numbers, 10 digits typical
+      let phone = document.getElementById("phone").value.trim();
+      if(!/^\d{10}$/.test(phone)){
+        alert("Phone number should contain exactly 10 digits.");
+        return;
+      }
+
+      // Email validation
+      let email = document.getElementById("email").value.trim();
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        alert("Please enter a valid email address.");
+        return;
+      }
+
+      // Item selection
+      let itemSelect = document.getElementById("item");
+      let selectedItems = Array.from(itemSelect.selectedOptions).map(opt => ({text: opt.text, price: parseInt(opt.value)}));
+      if(selectedItems.length < 1 || selectedItems.length > 2){
+        alert("Please select minimum 1 and maximum 2 items.");
+        return;
+      }
+
+      // Quantity validation: positive integer
+      let qty = parseInt(document.getElementById("quantity").value);
+      if(isNaN(qty) || qty < 1){
+        alert("Quantity must be a positive number.");
+        return;
+      }
+
+      // Time validation
+      let comingTime = document.getElementById("comingTime").value;
+      if(!comingTime){
+        alert("Please select your coming time.");
+        return;
+      }
+
+      // Order Number
+      let count = parseInt(localStorage.getItem("orderCount")) + 1;
+      localStorage.setItem("orderCount", count);
+      let orderNo = String(count).padStart(3,"0");
+
+      let total = selectedItems.reduce((sum, it) => sum + (it.price * qty), 0);
+
+      document.getElementById("bOrderNo").innerText = orderNo;
+      document.getElementById("bDateTime").innerText = new Date().toLocaleString();
+      document.getElementById("bName").innerText = name;
+      document.getElementById("bPhone").innerText = phone;
+      document.getElementById("bEmail").innerText = email;
+      document.getElementById("bItem").innerText = selectedItems.map(it=>it.text).join(", ");
+      document.getElementById("bQty").innerText = qty;
+      document.getElementById("bComing").innerText = comingTime;
+      document.getElementById("bTotal").innerText = total;
+
+      let upiID = "upi://pay?pa=yourupi@bank&pn=ChaiGaramCafe&am=" + total + "&cu=INR";
+      document.getElementById("qrCode").src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(upiID);
+
+      // WhatsApp bill message
+      let whatsappMsg = `Order No: ${orderNo}%0AName: ${name}%0APhone: ${phone}%0AEmail: ${email}%0AItems: ${selectedItems.map(it=>it.text).join(", ")}%0AQuantity: ${qty}%0AComing At: ${comingTime}%0ATotal: ₹${total}%0AUPI: ${upiID}`;
+      let whatsappLink = `https://wa.me/917599792990?text=${whatsappMsg}`;
+      document.getElementById("whatsappPayBtn").href = whatsappLink;
+
+      document.getElementById("bill").style.display = "block";
+    });
+  </script>
+
+</body>
+</html>
