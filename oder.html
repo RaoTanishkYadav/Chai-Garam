@@ -178,6 +178,51 @@
     height: 28px;
   }
 }
+
+/* Extra mobile-friendly tweaks */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 2vw;
+    gap: 0;
+  }
+  .order-container, .right-side {
+    padding: 6px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    font-size: 1rem;
+    padding: 8px;
+  }
+  .btn, #whatsappPayBtn, #paytmPayBtn {
+    font-size: 1rem;
+    padding: 10px;
+    width: 100%;
+  }
+  .bill {
+    padding: 8px;
+    font-size: 0.95rem;
+  }
+  .bill .qr img {
+    width: 90px;
+    height: 90px;
+  }
+  nav {
+    flex-direction: column;
+    padding: 8px 4px;
+  }
+  .logo-area h1 {
+    font-size: 1rem;
+  }
+  .slider, .slides img {
+    height: 110px;
+  }
+  .menu-slider {
+    height: 90px;
+    width: 98vw;
+    max-width: 100vw;
+  }
+}
   </style>
 </head>
 <body>
