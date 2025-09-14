@@ -614,26 +614,27 @@
       let upiID = "8868849287@ptsbi";
       let message = document.getElementById("message").value.trim();
 
-      let whatsappMsg =
-        `*Chai Garam Café - Bill*%0A` +
-        `*Order No:* ${orderNo}%0A` +
-        `*Date & Time:* ${new Date().toLocaleString()}%0A` +
-        `*Name:* ${name}%0A` +
-        `*Phone:* ${phone}%0A` +
-        `*Email:* ${email}%0A` +
-        `*Items:* ${selectedItems.map(it=>it.text).join(", ")}%0A` +
-        `*Quantity:* ${qty}%0A` +
-        `*Coming At:* ${comingTime}%0A` +
-        `*Total:* ₹${total}%0A` +
-        `*Special Instructions:* ${message ? message : "None"}%0A` +
-        `*Pay to UPI ID:* ${upiID}%0A` +
-        `Scan the QR in your bill to pay.`;
+    let whatsappMsg =
+  `*Chai Garam Café - Bill*%0A` +
+  `*Order No:* ${orderNo}%0A` +
+  `*Date & Time:* ${new Date().toLocaleString()}%0A` +
+  `*Name:* ${name}%0A` +
+  `*Phone:* ${phone}%0A` +
+  `*Email:* ${email}%0A` +
+  `*Items:* ${selectedItems.map(it => it.text).join(", ")}%0A` +
+  `*Quantity:* ${qty}%0A` +
+  `*Coming At:* ${comingTime}%0A` +
+  `*Total:* ₹${total}%0A` +
+  `*Special Instructions:* ${message ? message : "None"}%0A` +
+  `*Pay to UPI ID:* ${upiID}%0A` +
+  `Scan the QR in your bill to pay.`;
 
-      let whatsappLink = `https://wa.me/917599792990?text=${whatsappMsg}`;
-      document.getElementById("whatsappPayBtn").href = whatsappLink;
+let whatsappLink = `https://wa.me/917599792990?text=${encodeURIComponent(whatsappMsg)}`;
 
-      document.getElementById("bill").style.display = "block";
-      document.getElementById("whatsappPayBtn").style.display = "inline-block";
+document.getElementById("whatsappPayBtn").href = whatsappLink;
+document.getElementById("bill").style.display = "block";
+document.getElementById("whatsappPayBtn").style.display = "inline-block";
+
     });
 
     // Listen for WhatsApp Pay click
@@ -644,3 +645,4 @@
   </script>
 </body>
 </html>
+
