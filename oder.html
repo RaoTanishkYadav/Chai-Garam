@@ -553,14 +553,28 @@
 </a>
 
   <script>
-    // Auto-slide every 4 seconds
-    setInterval(() => showSlide(index + 1), 4000);
-    // Track daily order count
-    let today = new Date().toLocaleDateString();
-    if(localStorage.getItem("orderDate") !== today){
-      localStorage.setItem("orderDate", today);
-      localStorage.setItem("orderCount", 0);
-    }
+    // Get today's date in YYYY-MM-DD format
+function getTodayDate() {
+  const now = new Date();
+  return now.getFullYear() + "-" + (now.getMonth()+1).toString().padStart(2,"0") + "-" + now.getDate().toString().padStart(2,"0");
+}
+
+// Reset order number at midnight
+let today = getTodayDate();
+if (localStorage.getItem("orderDate") !== today) {
+  localStorage.setItem("orderDate", today);
+  localStorage.setItem("orderCount", "0");
+}
+
+// When an order is placed:
+function getNextOrderNo() {
+  let count = parseInt(localStorage.getItem("orderCount") || "0") + 1;
+  localStorage.setItem("orderCount", count);
+  return String(count).padStart(3, "0");
+}
+
+// Auto-slide every 4 seconds
+setInterval(() => showSlide(index + 1), 4000);
 
     document.getElementById("orderForm").addEventListener("submit", function(e){
       e.preventDefault();
@@ -609,9 +623,7 @@
       }
 
       // Order Number
-      let count = parseInt(localStorage.getItem("orderCount")) + 1;
-localStorage.setItem("orderCount", count);
-let orderNo = String(count).padStart(3,"0");
+      let orderNo = getNextOrderNo();
 
       let total = selectedItems.reduce((sum, it) => sum + (it.price * qty), 0);
 
